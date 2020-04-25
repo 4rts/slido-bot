@@ -51,4 +51,5 @@ def main():
         BOT.closeBrowser()
         print("Votes: " + str(i))
 if __name__ == "__main__":
+    print("Have fun.")
     main()
