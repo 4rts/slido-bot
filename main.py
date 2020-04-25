@@ -4,48 +4,51 @@ import sys
 import getopt
 
 class Bot:
-    def __init__(self, hash, xpath, browser):
-        self.driver = webdriver.Firefox(executable_path='/home/ego/Downloads/geckodriver-v0.26.0-linux64/geckodriver')
-
+    def __init__(self, hash=None, xpath=None, driver=None):
+        if hash == None or xpath == None or driver == None:
+            raise("Invalid arg")
+        self.hash = hash
+        self.xpath = xpath
+        self.driver = driver
+        if "chrome" in self.driver:
+            self.driver = webdriver.Chrome(self.driver)
+        else:
+            self.driver = webdriver.Firefox(executable_path=self.driver)
     def closeBrowser(self):
         self.driver.close()
 
     def vote(self):
         driver = self.driver
-        driver.get("https://app.sli.do/event/wwr2xfuj/live/questions")
+        hash = self.hash
+        xpath = self.xpath
+        driver.get("https://app.sli.do/event/"+hash+"/live/questions")
         time.sleep(1)
-        click_elem = driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/sda-live[1]/div[1]/sda-questions[1]/sda-question-list[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[2]/button[1]")
+        click_elem = driver.find_element_by_xpath(xpath)
         click_elem.click()
 
 # hash # xpath # times
 
+try:
+    options, args = getopt.getopt(
+        sys.argv[1:], "h:x:d:v:",
+        ["hash=", "xpath=", "browser=", "votes="])
+    for name, value in options:
+        if name in ('-h', '--hash'):
+            HASH = value
+        if name in ('-x', '--xpath'):
+            XPATH = value
+        if name in ('-d', '--driver'):
+            DRIVER = value
+        if name in ('-v', '--votes'):
+            VOTES = value
 
-def main():
+except getopt.GetoptError as err:
+    print(str(err))
+    print("Invalid args!")
+    sys.exit(1)
 
-    try:
-        options, args = getopt.getopt(
-            sys.argv[1:], "h:x:b:p:v",
-            ["hash=", "xpath=", "browser=", "path=", "votes="])
-        for name, value in options:
-            if name in ('-h', '--hash'):
-                HASH = value
-            if name in ('-x', '--xpath'):
-                XPATH = value
-            if name in ('-b', '--browser'):
-                BROWSER = value
-            if name in ('-p', '--path'):
-                PATH = value
-            if name in ('-v', '--votes'):
-                VOTES = value
-
-    except getopt.GetoptError as err:
-        print(str(err))
-        print("Invalid args!")
-        sys.exit(1)
-    for i in range(1, sys.argv[2] + 1):
-        BOT = Bot(HASH, XPATH, BROWSER)
-        BOT.vote()
-        BOT.closeBrowser()
-        print("Votes: " + str(i))
-if __name__ == "main":
-    main()
+for i in range(1, int(VOTES)):
+    BOT = Bot(HASH,XPATH,DRIVER)
+    BOT.vote()
+    BOT.closeBrowser()
+    print("Votes: " + str(i))
