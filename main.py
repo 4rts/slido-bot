@@ -1,6 +1,6 @@
 from selenium import webdriver
 import time
-
+import sys
 
 class Bot:
     def __init__(self):
@@ -16,12 +16,11 @@ class Bot:
         click_elem = driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/sda-live[1]/div[1]/sda-questions[1]/sda-question-list[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[2]/button[1]")
         click_elem.click()
 
-for i in range(1,10000):
-    BOT = Bot()
-    BOT.vote()
-    BOT.closeBrowser()
-    print("Done! Next round: " + str(i+1))
+# hash # xpath # times
+if __name__ == "main":
 
-print("Nice")
-time.sleep(10)
-exit()
+    for i in range(0, sys.argv[2]):
+        BOT = Bot()
+        BOT.vote()
+        BOT.closeBrowser()
+        print("Done! Next round: " + str(i + 1))
