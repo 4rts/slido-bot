@@ -47,7 +47,7 @@ except getopt.GetoptError as err:
     print("Invalid args!")
     sys.exit(1)
 
-for i in range(1, int(VOTES)):
+for i in range(1, int(VOTES)+1):
     BOT = Bot(HASH,XPATH,DRIVER)
     BOT.vote()
     BOT.closeBrowser()
