@@ -19,8 +19,8 @@ class Bot:
 # hash # xpath # times
 if __name__ == "main":
 
-    for i in range(0, sys.argv[2]):
+    for i in range(1, sys.argv[2]+1):
         BOT = Bot()
         BOT.vote()
         BOT.closeBrowser()
-        print("Done! Next round: " + str(i + 1))
+        print("Votes: " + str(i))
