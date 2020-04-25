@@ -3,7 +3,7 @@ import time
 import sys
 import getopt
 
-class Bot:
+class SlidoBot:
     def __init__(self, hash=None, xpath=None, driver=None):
         if hash == None or xpath == None or driver == None:
             raise("Invalid arg")
@@ -29,7 +29,7 @@ def main():
     try:
         options, args = getopt.getopt(
             sys.argv[1:], "h:x:d:v:",
-            ["hash=", "xpath=", "browser=", "votes="])
+            ["hash=", "xpath=", "driver=", "votes="])
         for name, value in options:
             if name in ('-h', '--hash'):
                 HASH = value
@@ -46,7 +46,7 @@ def main():
         sys.exit(1)
 
     for i in range(1, int(VOTES)+1):
-        BOT = Bot(HASH,XPATH,DRIVER)
+        BOT = SlidoBot(HASH, XPATH, DRIVER)
         BOT.vote()
         BOT.closeBrowser()
         print("Votes: " + str(i))
