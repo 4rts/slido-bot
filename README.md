@@ -1,6 +1,11 @@
 # Slido-Bot
 A bot for the audience interaction tool sli.do.
 Since Slido blocks malicious access via the API very effectively, this bot was created. It works via Firefox or Chrome browser.
+##Instalation
+```
+git clone https://github.com/7advanced/slido-bot.git
+python -m pip install -r requirements.txt
+```
 ## Syntax
 To use the bot, copy 
 ```
