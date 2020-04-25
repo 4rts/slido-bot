@@ -18,37 +18,37 @@ class Bot:
         self.driver.close()
 
     def vote(self):
-        driver = self.driver
-        hash = self.hash
-        xpath = self.xpath
-        driver.get("https://app.sli.do/event/"+hash+"/live/questions")
+        self.driver.get("https://app.sli.do/event/"+self.hash+"/live/questions")
         time.sleep(1)
-        click_elem = driver.find_element_by_xpath(xpath)
+        click_elem = self.driver.find_element_by_xpath(self.xpath)
         click_elem.click()
 
 # hash # xpath # times
+def main():
 
-try:
-    options, args = getopt.getopt(
-        sys.argv[1:], "h:x:d:v:",
-        ["hash=", "xpath=", "browser=", "votes="])
-    for name, value in options:
-        if name in ('-h', '--hash'):
-            HASH = value
-        if name in ('-x', '--xpath'):
-            XPATH = value
-        if name in ('-d', '--driver'):
-            DRIVER = value
-        if name in ('-v', '--votes'):
-            VOTES = value
+    try:
+        options, args = getopt.getopt(
+            sys.argv[1:], "h:x:d:v:",
+            ["hash=", "xpath=", "browser=", "votes="])
+        for name, value in options:
+            if name in ('-h', '--hash'):
+                HASH = value
+            if name in ('-x', '--xpath'):
+                XPATH = value
+            if name in ('-d', '--driver'):
+                DRIVER = value
+            if name in ('-v', '--votes'):
+                VOTES = value
 
-except getopt.GetoptError as err:
-    print(str(err))
-    print("Invalid args!")
-    sys.exit(1)
+    except getopt.GetoptError as err:
+        print(str(err))
+        print("Invalid args!")
+        sys.exit(1)
 
-for i in range(1, int(VOTES)+1):
-    BOT = Bot(HASH,XPATH,DRIVER)
-    BOT.vote()
-    BOT.closeBrowser()
-    print("Votes: " + str(i))
+    for i in range(1, int(VOTES)+1):
+        BOT = Bot(HASH,XPATH,DRIVER)
+        BOT.vote()
+        BOT.closeBrowser()
+        print("Votes: " + str(i))
+if __name__ == "__main__":
+    main()
